@@ -1,21 +1,12 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
-using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Diagnostics;
-using System.IO;
 
 namespace DiscordDataPackageViewer
 {
@@ -50,7 +41,7 @@ namespace DiscordDataPackageViewer
                 foreach (string directory in dirs)
                 {
                     string separatedPath = directory.Substring(directory.LastIndexOf(System.IO.Path.DirectorySeparatorChar) + 1);
-                    if (desiredDirs.Contains(separatedPath)) 
+                    if (desiredDirs.Contains(separatedPath))
                     {
                         //Console.WriteLine(separatedPath);
                         folderList.Items.Add(separatedPath);
@@ -58,6 +49,7 @@ namespace DiscordDataPackageViewer
                     }
                     dirList.Add(separatedPath);
                 }
+
                 //Console.WriteLine($"{dirs.Count} directories found.");
                 foreach (string folder in desiredDirs)
                 {
@@ -70,8 +62,29 @@ namespace DiscordDataPackageViewer
                 if (!string.IsNullOrEmpty(missing))
                 {
                     errorText.Content = string.Format("Missing directories: {0}", missing.Remove(missing.Length - 2));
+                    errorText.Foreground = new SolidColorBrush(Colors.Red);
+                }
+                else
+                {
+                    errorText.Content = "Successfully loaded.";
+                    errorText.Foreground = new SolidColorBrush(Colors.Green);
                 }
             }
+        }
+
+        private void folderList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void folderList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            List<string> rootDir = new List<string>();
+            foreach (string item in folderList.Items)
+            {
+                rootDir.Add(item);
+            }
+            folderList.Items.Clear();
         }
     }
 }
