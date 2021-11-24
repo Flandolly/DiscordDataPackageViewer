@@ -72,7 +72,7 @@ namespace DiscordDataPackageViewer
             }
         }
 
-        private void folderList_SelectionChanged(object sender, SelectionChangedEventArgs e) 
+        private void folderList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
@@ -80,7 +80,11 @@ namespace DiscordDataPackageViewer
         private void folderList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             List<string> rootDir = new List<string>();
-
+            foreach (string item in folderList.Items)
+            {
+                rootDir.Add(item);
+            }
+            folderList.Items.Clear();
         }
     }
 }
